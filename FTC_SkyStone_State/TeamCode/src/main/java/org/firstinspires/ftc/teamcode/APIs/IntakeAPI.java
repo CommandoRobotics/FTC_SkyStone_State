@@ -36,6 +36,9 @@ public class IntakeAPI {
         if(ConstantValues.isTiltMotorReversed) {
             this.tiltMotor.setDirection(DcMotor.Direction.REVERSE);
         }
+
+        resetTiltEncoder();
+
     }
 
     public void setIntakeSpeed(double speed) {
@@ -72,5 +75,20 @@ public class IntakeAPI {
     public void intakeOut() {
         leftIntakeMotor.setPower(intakeOutPower);
         rightIntakeMotor.setPower(intakeOutPower);
+    }
+
+    public void resetTiltEncoder() {
+        tiltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        tiltMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void runTiltToPosition(int position) {
+        tiltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        tiltMotor.setTargetPosition(position);
+        tiltMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void homeTilt() {
+        runTiltToPosition(0);
     }
 }
